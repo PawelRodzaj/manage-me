@@ -10,13 +10,54 @@
     <div>
   <h1>ManageMe</h1>
 
-  <form id="project-form">
-    <input type="text" id="name" placeholder="Nazwa projektu" required />
-    <input type="text" id="description" placeholder="Opis" required />
-    <button type="submit">Dodaj</button>
-  </form>
+  <!-- user info -->
+  <div id="user-info"></div>
 
-  <ul id="project-list"></ul>
+  <!-- active project display -->
+  <div id="active-project-info"></div>
+
+  <!-- project management -->
+  <section id="projects-section">
+    <h2>Projekty</h2>
+    <form id="project-form">
+      <input type="text" id="name" placeholder="Nazwa projektu" required />
+      <input type="text" id="description" placeholder="Opis" required />
+      <button type="submit">Dodaj</button>
+    </form>
+
+    <ul id="project-list"></ul>
+  </section>
+
+  <!-- stories section, hidden until a project is active -->
+  <section id="stories-section" style="display: none;">
+    <h2>Historyjki</h2>
+
+    <form id="story-form">
+      <input type="text" id="story-name" placeholder="Nazwa historyjki" required />
+      <input type="text" id="story-description" placeholder="Opis" required />
+      <select id="story-priority">
+        <option value="low">niski</option>
+        <option value="medium">średni</option>
+        <option value="high">wysoki</option>
+      </select>
+      <button type="submit">Dodaj</button>
+    </form>
+
+    <div id="story-lists">
+      <div>
+        <h3>To do</h3>
+        <ul id="stories-todo"></ul>
+      </div>
+      <div>
+        <h3>Doing</h3>
+        <ul id="stories-doing"></ul>
+      </div>
+      <div>
+        <h3>Done</h3>
+        <ul id="stories-done"></ul>
+      </div>
+    </div>
+  </section>
 </div>
 
 <script type="module" src="/src/main.ts"></script>
