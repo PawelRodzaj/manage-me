@@ -1,9 +1,14 @@
 import { StoryApi } from "../api/StoryApi"
-import type { Story, Priority, } from "../model/Story"
+import { TaskService } from "./TaskService"
+import type { Story, Priority } from "../model/Story"
 
 export class StoryService {
   static getStories(projectId: string): Story[] {
     return StoryApi.getByProject(projectId)
+  }
+
+  static getStoryById(storyId: string): Story | undefined {
+    return StoryApi.getById(storyId)
   }
 
   static addStory(
@@ -32,6 +37,7 @@ export class StoryService {
   }
 
   static deleteStory(id: string): void {
+    TaskService.deleteTasksByStory(id)
     StoryApi.delete(id)
   }
 }

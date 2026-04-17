@@ -1,65 +1,146 @@
 <!doctype html>
-<html lang="en">
+<html lang="pl">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>manage-me</title>
+    <link rel="stylesheet" href="/style.css" />
+    <title>ManageMe</title>
   </head>
   <body>
-    <div>
-  <h1>ManageMe</h1>
+    <div class="app">
+      <header>
+        <h1>ManageMe</h1>
+        <div class="header-actions">
+          <button id="theme-toggle">Tryb ciemny/jasny</button>
+          <button id="notifications-toggle">Powiadomienia (<span id="notification-badge">0</span>)</button>
+          <button id="login-button">Zaloguj</button>
+          <button id="logout-button" class="secondary hidden">Wyloguj</button>
+        </div>
+      </header>
 
-  <!-- user info -->
-  <div id="user-info"></div>
+      <main>
+        <section id="login-panel" class="card hidden">
+          <h2>Logowanie przez Google</h2>
+          <div id="google-signin-button"></div>
+          <p>Lub użyj adresu e-mail, jeśli Google nie jest skonfigurowane.</p>
+          <form id="login-form">
+            <input type="email" id="login-email" placeholder="Email" required />
+            <button type="submit">Zaloguj</button>
+          </form>
+          <p>Nowy użytkownik otrzyma rolę <strong>gość</strong>. Konto admina to <strong>superadmin@example.com</strong>.</p>
+        </section>
 
-  <!-- active project display -->
-  <div id="active-project-info"></div>
+        <section id="user-info-section" class="card">
+          <div id="user-info"></div>
+          <div id="active-project-info"></div>
+          <div id="account-status"></div>
+        </section>
 
-  <!-- project management -->
-  <section id="projects-section">
-    <h2>Projekty</h2>
-    <form id="project-form">
-      <input type="text" id="name" placeholder="Nazwa projektu" required />
-      <input type="text" id="description" placeholder="Opis" required />
-      <button type="submit">Dodaj</button>
-    </form>
+        <section id="users-section" class="card hidden">
+          <h2>Użytkownicy</h2>
+          <ul id="user-list"></ul>
+        </section>
 
-    <ul id="project-list"></ul>
-  </section>
+        <section id="projects-section" class="card">
+          <h2>Projekty</h2>
+          <form id="project-form">
+            <div class="field-row">
+              <input type="text" id="name" placeholder="Nazwa projektu" required />
+              <input type="text" id="description" placeholder="Opis" required />
+            </div>
+            <button type="submit">Dodaj projekt</button>
+          </form>
+          <ul id="project-list"></ul>
+        </section>
 
-  <!-- stories section, hidden until a project is active -->
-  <section id="stories-section" style="display: none;">
-    <h2>Historyjki</h2>
+        <section id="stories-section" class="card hidden">
+          <h2>Historyjki</h2>
+          <form id="story-form">
+            <div class="field-row">
+              <input type="text" id="story-name" placeholder="Nazwa historyjki" required />
+              <input type="text" id="story-description" placeholder="Opis" required />
+            </div>
+            <div class="field-row">
+              <select id="story-priority">
+                <option value="low">niski</option>
+                <option value="medium">średni</option>
+                <option value="high">wysoki</option>
+              </select>
+              <button type="submit">Dodaj historyjkę</button>
+            </div>
+          </form>
+          <div class="kanban-columns">
+            <div class="kanban-column">
+              <h3>To do</h3>
+              <ul id="stories-todo"></ul>
+            </div>
+            <div class="kanban-column">
+              <h3>Doing</h3>
+              <ul id="stories-doing"></ul>
+            </div>
+            <div class="kanban-column">
+              <h3>Done</h3>
+              <ul id="stories-done"></ul>
+            </div>
+          </div>
+        </section>
 
-    <form id="story-form">
-      <input type="text" id="story-name" placeholder="Nazwa historyjki" required />
-      <input type="text" id="story-description" placeholder="Opis" required />
-      <select id="story-priority">
-        <option value="low">niski</option>
-        <option value="medium">średni</option>
-        <option value="high">wysoki</option>
-      </select>
-      <button type="submit">Dodaj</button>
-    </form>
+        <section id="tasks-section" class="card hidden">
+          <h2>Zadania</h2>
+          <form id="task-form">
+            <div class="field-row">
+              <input type="text" id="task-name" placeholder="Nazwa zadania" required />
+              <input type="text" id="task-description" placeholder="Opis" required />
+            </div>
+            <div class="field-row">
+              <select id="task-priority">
+                <option value="low">niski</option>
+                <option value="medium">średni</option>
+                <option value="high">wysoki</option>
+              </select>
+              <input type="number" id="task-estimate" placeholder="Przewidywane roboczogodziny" min="1" required />
+            </div>
+            <div class="field-row">
+              <select id="task-story"></select>
+              <button type="submit">Dodaj zadanie</button>
+            </div>
+          </form>
 
-    <div id="story-lists">
-      <div>
-        <h3>To do</h3>
-        <ul id="stories-todo"></ul>
-      </div>
-      <div>
-        <h3>Doing</h3>
-        <ul id="stories-doing"></ul>
-      </div>
-      <div>
-        <h3>Done</h3>
-        <ul id="stories-done"></ul>
+          <div class="kanban-columns">
+            <div class="kanban-column">
+              <h3>To do</h3>
+              <ul id="tasks-todo"></ul>
+            </div>
+            <div class="kanban-column">
+              <h3>Doing</h3>
+              <ul id="tasks-doing"></ul>
+            </div>
+            <div class="kanban-column">
+              <h3>Done</h3>
+              <ul id="tasks-done"></ul>
+            </div>
+          </div>
+        </section>
+
+        <section id="notifications-panel" class="card hidden">
+          <h2>Powiadomienia</h2>
+          <ul id="notification-list"></ul>
+        </section>
+      </main>
+
+      <div id="notification-dialog" class="modal hidden">
+        <div class="dialog">
+          <header>
+            <h3>Nowe powiadomienie</h3>
+            <button id="close-notification-dialog" class="secondary">Zamknij</button>
+          </header>
+          <div id="notification-dialog-content"></div>
+        </div>
       </div>
     </div>
-  </section>
-</div>
 
-<script type="module" src="/src/main.ts"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script type="module" src="/src/main.ts"></script>
   </body>
 </html>
